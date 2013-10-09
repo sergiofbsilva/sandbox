@@ -26,9 +26,8 @@ After completing this registration process, you are ready to start the authoriza
 This section will explain how you can request the user permission so your application can access the Fénix API.
 
 1.  Your application must redirect the user to the following URL
-    
-    ```https://fenix.ist.utl.pt/oauth/userdialog?client_id=<client_id>&redirect_uri=<redirect_uri>```
-
+        
+        https://fenix.ist.utl.pt/oauth/userdialog?client_id=<client_id>&redirect_uri=<redirect_uri>
     * You should get the `client_id` and `redirect_uri` values from the application details in Fénix.
 
 The user will be redirected to a web page where it will be requested to authorize your application to access the scopes you selected in the application creation process. It will request user login if necessary.
@@ -36,7 +35,7 @@ The user will be redirected to a web page where it will be requested to authoriz
 ##Error Handling
 If the user denies the authorization request the user will be redirected to
 
-```<redirect_uri>?error=access_denied&error_description=User didn't allow the application```
+    <redirect_uri>?error=access_denied&error_description=User didn't allow the application
 
 At this point you can't continue the authorization workflow.
 
@@ -44,24 +43,26 @@ At this point you can't continue the authorization workflow.
 
 If the user authorizes your application, the web browser will be redirected to the `redirect_uri` like this
     
-`<redirect_uri>?code=XXXXXXXXXXX`
+    <redirect_uri>?code=XXXXXXXXXXX
 
 At this point you must issue a `POST` request on
     
-`https://fenix.ist.utl.pt/oauth/access_token?client_id=<client_id>&client_secret=<client_secret>&redirect_uri=<redirect_uri>&code=<code>&grant_type=authorization_code`
+    https://fenix.ist.utl.pt/oauth/access_token?client_id=<client_id>&client_secret=<client_secret>&redirect_uri=<redirect_uri>&code=<code>&grant_type=authorization_code
 
 * The `client_id`, `redirect_uri`, `client_secret` can be found the on the application details in Fénix.
 * The `code` is passed as a parameter to `redirect_uri` where the current request must be made.
 
 If everything goes smoothly, you should get an `application/json` 200 OK response with the following format
-
-`{"access_token":"IGNhbiBjb252ZXJ0IHRleHRzIHVzaW5nIHNldmVyYWwgY29kZSBwYWdlcyAodXNpbmcgQ2hhclNl", "refresh_token":"dCBwcm9wZXJ0eSkgZnJvbSBVbmljb2RlIHN0cmluZyB0byBieXRlIGFycmF5IGFuZCB0aGVuIGNv", expires:"3600"}`
+```json
+{"access_token":"IGNhbiBjb252ZXJ0IHRleHRzIHVzaW5nIHNldmVyYWwgY29kZSBwYWdlcyAodXNpbmcgQ2hhclNl", "refresh_token":"dCBwcm9wZXJ0eSkgZnJvbSBVbmljb2RlIHN0cmluZyB0byBieXRlIGFycmF5IGFuZCB0aGVuIGNv", expires:"3600"}
+```
 
 ##Error Handling
 
 If something goes wrong  a `application/json` `400 BAD_REQUEST` response will be issued in this format:
-
-`{"error":"invalid_grant","error_description":"..."}`
+```json
+{"error":"invalid_grant","error_description":"..."}
+```
 
 The following descriptions can occur:
 
@@ -81,14 +82,15 @@ The API base URL is `https://fenix.ist.utl.pt/api/v1`
 Each endpoint belongs to a scope except the endpoints that are public.
 When requesting a scoped endpoint the query param `access_token` must be present in the URL. For example:
 
-`https://fenix.ist.utl.pt/api/v1/person?access_token=<access_token>`
+    https://fenix.ist.utl.pt/api/v1/person?access_token=<access_token>
 
 ##Error Handling
 
 If something goes wrong  a `application/json` `HTTP 401 Not Authorized` response will be issued in this forma
 t:
-
-`{"error":"...","error_description":"..."}`
+```json
+{"error":"...","error_description":"..."}
+```
 
 The `error` can be one of the following
 
@@ -104,18 +106,19 @@ If the `access_token` expires, the `refresh_token` must used to get a new one. T
 
 To get a new `access_token` you must do a `POST` request on :
 
-`https://fenix.ist.utl.pt/oauth/refresh_token?client_id=<client_id>&client_secret=<client_secret>&refresh_token=<refresh_token>`
+    https://fenix.ist.utl.pt/oauth/refresh_token?client_id=<client_id>&client_secret=<client_secret>&refresh_token=<refresh_token>
 
 If everything goes smoothly, you should get an `application/json` 200 OK response with the following format
-
-`{"access_token":"IGNhbiBjb252ZXJ0IHRleHRzIHVzaW5nIHNldmVyYWwgY29kZSBwYWdlcyAodXNpbmcgQ2hhclNl", "expires":"3600"}`
+```json
+{"access_token":"IGNhbiBjb252ZXJ0IHRleHRzIHVzaW5nIHNldmVyYWwgY29kZSBwYWdlcyAodXNpbmcgQ2hhclNl", "expires":"3600"}
+```
 
 ##Error Handling
 If something goes wrong  a `application/json` `HTTP 401 Not Authorized` response will be issued in this forma
 t:
-`{"error":"...","error_description":"..."}`
-
-
+```json    
+{"error":"...","error_description":"..."}
+```
 The `error` can be one of the following
 
 * `invalid_grant` - Credentials or redirect_uri don't match
