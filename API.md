@@ -1,5 +1,7 @@
 #OAuth Authorization Workflow
 
+This guide will show you how to authorize your web application using OAuth2 and how to use the Fénix API so you can access Fénix users' information with their authorization.
+
 ##Table of Contents
 
 - [1. Register Application](#1-register-application)
@@ -11,8 +13,6 @@
 	- [Error Handling](#error-handling-2)
 - [3. Refreshing the access token](#3-refreshing-the-access-token)
 	- [Error Handling](#error-handling-3)
-
-This guide will show you how to authorize your web application using OAuth2 and how to use the Fénix API so you can access Fénix users' information with their authorization.
 
 #1. Register Application
 
