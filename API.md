@@ -51,7 +51,7 @@ If the user denies the authorization request the user will be redirected to
 
 At this point you can't continue the authorization workflow.
 
-#2. Request the Access Token
+#3. Request the Access Token
 
 If the user authorizes your application, the web browser will be redirected to the `redirect_uri` like this
     
@@ -83,7 +83,7 @@ The following descriptions can occur:
 * `Code Invalid`- the `code` is no longer valid
 * `Code expired` - the `code` has expired
 
-#3. Make an API request
+#4. Make an API request
 
 At this point you already have an `access_token` and you want to invoke the Fénix API on behalf of the user who previously gave your application permissions.
 
@@ -112,7 +112,7 @@ The `error` can be one of the following
 * `accessTokenInvalidFormat` - Access Token not recognized.
 
 
-#3. Refreshing the access token
+#5. Refreshing the access token
 
 If the `access_token` expires, the `refresh_token` must used to get a new one. The `refresh_token` never expires.
 
